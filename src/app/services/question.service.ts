@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, doc, setDoc, updateDoc, serverTimestamp } from '@angular/fire/firestore';
-import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
+import { Firestore, collection, doc, setDoc, updateDoc, serverTimestamp, getDocs, deleteDoc, getDoc, query, orderBy } from '@angular/fire/firestore';
+import { Storage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from '@angular/fire/storage';
 import { Question, AnswerGroup, Answer } from '../models/question.model';
 import { catchError, from, map, Observable, switchMap, throwError, forkJoin, of } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,6 +11,118 @@ import { v4 as uuidv4 } from 'uuid';
 export class QuestionService {
   private firestore: Firestore = inject(Firestore);
   private storage: Storage = inject(Storage);
+
+  /**
+   * Gets a list of all questions from Firestore
+   * @returns An Observable with an array of Question objects
+   */
+  getQuestions(): Observable<Question[]> {
+    const questionsRef = collection(this.firestore, 'questions');
+    const questionsQuery = query(questionsRef, orderBy('createdAt', 'desc'));
+    
+    return from(getDocs(questionsQuery)).pipe(
+      map(snapshot => {
+        return snapshot.docs.map(doc => {
+          const data = doc.data() as any;
+          return {
+            ...data,
+            id: doc.id
+          } as Question;
+        });
+      }),
+      catchError(error => {
+        console.error('Error getting questions:', error);
+        return throwError(() => new Error(`Failed to get questions: ${error.message}`));
+      })
+    );
+  }
+
+  /**
+   * Gets a single question by ID
+   * @param id The question ID
+   * @returns An Observable with the Question object
+   */
+  getQuestion(id: string): Observable<Question> {
+    const questionRef = doc(this.firestore, 'questions', id);
+    
+    return from(getDoc(questionRef)).pipe(
+      map(docSnap => {
+        if (!docSnap.exists()) {
+          throw new Error(`Question with ID ${id} not found`);
+        }
+        
+        const data = docSnap.data() as any;
+        return {
+          ...data,
+          id: docSnap.id
+        } as Question;
+      }),
+      catchError(error => {
+        console.error(`Error getting question ${id}:`, error);
+        return throwError(() => new Error(`Failed to get question: ${error.message}`));
+      })
+    );
+  }
+
+  /**
+   * Deletes a question and its associated images from Firestore and Storage
+   * @param id The question ID to delete
+   * @returns An Observable that completes when the deletion is successful
+   */
+  deleteQuestion(id: string): Observable<void> {
+    const questionRef = doc(this.firestore, 'questions', id);
+    
+    // First get the question to know which images to delete
+    return this.getQuestion(id).pipe(
+      switchMap(question => {
+        const deletePromises: Promise<void>[] = [];
+        
+        // Delete question image if it exists
+        if (question.imageUrl) {
+          const imagePath = `questions/${id}/main`;
+          deletePromises.push(this.deleteImage(imagePath));
+        }
+        
+        // Delete answer group images
+        if (question.answerGroups) {
+          question.answerGroups.forEach(group => {
+            group.answers.forEach(answer => {
+              if (answer.imageUrl) {
+                const imagePath = `questions/${id}/groups/${group.id}/answers/${answer.id}`;
+                deletePromises.push(this.deleteImage(imagePath));
+              }
+            });
+          });
+        }
+        
+        // Delete the document from Firestore
+        deletePromises.push(deleteDoc(questionRef).catch(error => {
+          console.error(`Error deleting question ${id}:`, error);
+          throw new Error(`Failed to delete question: ${error.message}`);
+        }));
+        
+        return from(Promise.all(deletePromises)).pipe(
+          map(() => void 0)
+        );
+      }),
+      catchError(error => {
+        console.error(`Error in deleteQuestion for ID ${id}:`, error);
+        return throwError(() => new Error(`Failed to delete question: ${error.message}`));
+      })
+    );
+  }
+
+  /**
+   * Helper method to delete an image from Firebase Storage
+   */
+  private deleteImage(path: string): Promise<void> {
+    const storageRef = ref(this.storage, path);
+    return deleteObject(storageRef).catch(error => {
+      // Log but don't fail if image deletion fails
+      console.warn(`Warning: Failed to delete image at ${path}:`, error);
+      return Promise.resolve();
+    });
+  }
 
   /**
    * Saves a question with nested answer groups to Firestore
