@@ -67,7 +67,7 @@ import { v4 as uuidv4 } from 'uuid';
               <div *ngIf="currentQuestion?.imageUrl" class="mt-2">
                 <div class="d-flex align-items-center">
                   <div class="image-preview me-3">
-                    <img [src]="currentQuestion.imageUrl" alt="Question image" class="img-thumbnail" style="max-height: 100px;">
+                    <img [src]="currentQuestion!.imageUrl" alt="Question image" class="img-thumbnail" style="max-height: 100px;">
                   </div>
                   <div>
                     <p class="mb-1"><small>Current image</small></p>
@@ -289,7 +289,7 @@ export class QuestionManagerComponent implements OnInit {
   questionForm!: FormGroup;
   currentQuestion: Question | null = null;
   isEditMode = false;
-  questionId: string | null = null;
+  questionId: string | undefined = undefined;
   
   loading = true;
   submitted = false;
@@ -302,28 +302,34 @@ export class QuestionManagerComponent implements OnInit {
   answerImagesToRemove: {[key: string]: boolean} = {};
   
   ngOnInit(): void {
+    console.log('QuestionManagerComponent initialized');
     this.initForm();
     
     // Check if we're in edit mode
     this.route.paramMap.pipe(
       switchMap(params => {
         const id = params.get('id');
-        this.questionId = id;
+        console.log('Route params:', { id });
+        this.questionId = id || undefined;
         this.isEditMode = !!id;
         
         if (id) {
+          console.log('Loading question with ID:', id);
           return this.questionService.getQuestion(id).pipe(
             catchError(error => {
+              console.error('Error loading question:', error);
               this.error = `Could not load question: ${error.message}`;
               this.loading = false;
               return of(null);
             })
           );
         } else {
+          console.log('Creating new question');
           return of(null);
         }
       })
     ).subscribe(question => {
+      console.log('Question loaded:', question);
       if (question) {
         this.currentQuestion = question;
         this.populateForm(question);
@@ -550,7 +556,7 @@ export class QuestionManagerComponent implements OnInit {
     // Build the question object from the form
     const formValue = this.questionForm.value;
     const question: Question = {
-      id: this.questionId || undefined,
+      id: this.questionId,
       text: formValue.text,
       description: formValue.description,
       required: formValue.required,
@@ -560,7 +566,7 @@ export class QuestionManagerComponent implements OnInit {
     
     // Handle image removal
     if (this.isEditMode && this.imageToRemove && this.currentQuestion?.imageUrl) {
-      question.imageUrl = null; // Signal to remove the image
+      question.imageUrl = undefined; // Signal to remove the image
     }
     
     // Handle answer image removals
@@ -568,7 +574,7 @@ export class QuestionManagerComponent implements OnInit {
       question.answerGroups.forEach(group => {
         group.answers.forEach(answer => {
           if (this.answerImagesToRemove[answer.id]) {
-            answer.imageUrl = null; // Signal to remove the image
+            answer.imageUrl = undefined; // Signal to remove the image
           }
         });
       });

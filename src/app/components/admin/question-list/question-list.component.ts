@@ -38,7 +38,7 @@ interface FirebaseTimestamp {
           <tbody>
             <tr *ngFor="let question of questions">
               <td>{{ question.text | slice:0:50 }}{{ question.text.length > 50 ? '...' : '' }}</td>
-              <td>{{ question.answerGroups?.length || 0 }}</td>
+              <td>{{ question.answerGroups.length || 0 }}</td>
               <td>{{ formatCreatedDate(question.createdAt) }}</td>
               <td>
                 <div class="btn-group">
