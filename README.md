@@ -1,9 +1,13 @@
-"Show me how to deploy this to Firebase Hosting"
 
 "Add a progress bar for the question flow"
-
+----------
 "Implement the admin interface for adding questions"
+Build the form UI in Angular.
 
+Implement Firestore writes with validation.
+
+Secure the interface with Firebase Auth.
+---------------------
 
 # ProductSelectionTool
 
