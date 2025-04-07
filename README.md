@@ -1,3 +1,10 @@
+"Show me how to deploy this to Firebase Hosting"
+
+"Add a progress bar for the question flow"
+
+"Implement the admin interface for adding questions"
+
+
 # ProductSelectionTool
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.1.
