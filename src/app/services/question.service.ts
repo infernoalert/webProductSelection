@@ -9,8 +9,8 @@ import { v4 as uuidv4 } from 'uuid';
   providedIn: 'root'
 })
 export class QuestionService {
-  private firestore: Firestore = inject(Firestore);
-  private storage: Storage = inject(Storage);
+  private firestore = inject(Firestore);
+  private storage = inject(Storage);
 
   /**
    * Gets a list of all questions from Firestore
@@ -23,10 +23,12 @@ export class QuestionService {
     return from(getDocs(questionsQuery)).pipe(
       map(snapshot => {
         return snapshot.docs.map(doc => {
-          const data = doc.data() as any;
+          const data = doc.data();
           return {
             ...data,
-            id: doc.id
+            id: doc.id,
+            createdAt: data['createdAt']?.toDate(),
+            updatedAt: data['updatedAt']?.toDate()
           } as Question;
         });
       }),

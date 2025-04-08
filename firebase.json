@@ -1,4 +1,8 @@
 {
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
   "hosting": {
     "public": "dist/product-selection-tool/browser",
     "ignore": [
@@ -12,5 +16,26 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "emulators": {
+    "hosting": {
+      "port": 5050
+    },
+    "ui": {
+      "enabled": true,
+      "port": 4040
+    },
+    "storage": {
+      "port": 9190
+    },
+    "firestore": {
+      "port": 8090
+    },
+    "hub": {
+      "port": 4440
+    }
   }
 }

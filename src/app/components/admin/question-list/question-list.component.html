@@ -1,1 +1,39 @@
-<p>question-list works!</p>
+<div class="container">
+  <div class="header">
+    <h2>Questions</h2>
+    <button class="btn btn-primary" [routerLink]="['/admin/questions/new']">Add New Question</button>
+  </div>
+
+  <div class="alert alert-info" *ngIf="loading">Loading questions...</div>
+  <div class="alert alert-warning" *ngIf="!loading && questions?.length === 0">
+    No questions found. Create your first question!
+  </div>
+
+  <div class="table-responsive" *ngIf="questions && questions.length > 0">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Question Text</th>
+          <th>Answer Groups</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let question of questions">
+          <td>{{ question.text | slice:0:50 }}{{ question.text.length > 50 ? '...' : '' }}</td>
+          <td>{{ question.answerGroups.length || 0 }}</td>
+          <td>{{ formatCreatedDate(question.createdAt) }}</td>
+          <td>
+            <div class="btn-group">
+              <button class="btn btn-sm btn-primary" [routerLink]="['/admin/questions/edit', question.id]">Edit</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteQuestion(question.id)">Delete</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+</div>

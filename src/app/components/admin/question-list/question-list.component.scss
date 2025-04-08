@@ -1,0 +1,27 @@
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 15px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  
+  th, td {
+    padding: 0.75rem;
+    vertical-align: middle;
+  }
+}
+
+.btn-group {
+  display: flex;
+  gap: 0.5rem;
+}

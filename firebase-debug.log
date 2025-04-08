@@ -1,0 +1,145 @@
+[debug] [2025-04-08T04:17:22.390Z] ----------------------------------------------------------------------
+[debug] [2025-04-08T04:17:22.392Z] Command:       C:\nvm4w\nodejs\node.exe C:\nvm4w\nodejs\node_modules\firebase-tools\lib\bin\firebase.js emulators:start
+[debug] [2025-04-08T04:17:22.393Z] CLI Version:   14.1.0
+[debug] [2025-04-08T04:17:22.393Z] Platform:      win32
+[debug] [2025-04-08T04:17:22.393Z] Node Version:  v22.13.0
+[debug] [2025-04-08T04:17:22.393Z] Time:          Tue Apr 08 2025 14:17:22 GMT+1000 (Australian Eastern Standard Time)
+[debug] [2025-04-08T04:17:22.393Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-04-08T04:17:22.538Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-04-08T04:17:22.538Z] > authorizing via signed-in user (payamamerian@ecoinsight.com.au)
+[debug] [2025-04-08T04:17:22.601Z] openjdk version "11.0.26" 2025-01-21
+OpenJDK Runtime Environment Temurin-11.0.26+4 (build 11.0.26+4)
+[debug] [2025-04-08T04:17:22.601Z] 
+OpenJDK 64-Bit Server VM Temurin-11.0.26+4 (build 11.0.26+4, mixed mode)
+
+[debug] [2025-04-08T04:17:22.612Z] Parsed Java major version: 11
+[info] i  emulators: Starting emulators: firestore, hosting, storage {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: firestore, hosting, storage"}}
+[debug] [2025-04-08T04:17:22.623Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-04-08T04:17:22.623Z] [firestore] Firestore Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-04-08T04:17:22.623Z] [firestore.websocket] websocket server for firestore only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-04-08T04:17:22.623Z] [hosting] Hosting Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-04-08T04:17:22.623Z] [storage] Storage Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-04-08T04:17:22.623Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4440},{"address":"::1","family":"IPv6","port":4440}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4040},{"address":"::1","family":"IPv6","port":4040}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8090}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5050}],"storage":[{"address":"127.0.0.1","family":"IPv4","port":9190}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2025-04-08T04:17:22.627Z] [hub] writing locator at C:\Users\PAYAMA~1\AppData\Local\Temp\hub-web-productselection.json
+[debug] [2025-04-08T04:17:22.634Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2025-04-08T04:17:22.634Z] Ignoring unsupported arg: single_project_mode_error {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: single_project_mode_error"}}
+[debug] [2025-04-08T04:17:22.634Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","C:\\Users\\PayamAmerian\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.19.8.jar","--host","127.0.0.1","--port",8090,"--websocket_port",9150,"--project_id","web-productselection","--rules","C:\\Users\\PayamAmerian\\Desktop\\Temporary\\New folder\\product-selection-tool\\firestore.rules","--single_project_mode",true],"optionalArgs":["port","webchannel_port","host","rules","websocket_port","functions_emulator","seed_from_export","project_id","single_project_mode"],"joinArgs":false,"shell":false,"port":8090} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\PayamAmerian\\\\.cache\\\\firebase\\\\emulators\\\\cloud-firestore-emulator-v1.19.8.jar\",\"--host\",\"127.0.0.1\",\"--port\",8090,\"--websocket_port\",9150,\"--project_id\",\"web-productselection\",\"--rules\",\"C:\\\\Users\\\\PayamAmerian\\\\Desktop\\\\Temporary\\\\New folder\\\\product-selection-tool\\\\firestore.rules\",\"--single_project_mode\",true],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"websocket_port\",\"functions_emulator\",\"seed_from_export\",\"project_id\",\"single_project_mode\"],\"joinArgs\":false,\"shell\":false,\"port\":8090}"}}
+[info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
+[debug] [2025-04-08T04:17:24.495Z] Apr 08, 2025 2:17:24 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start
+INFO: Started WebSocket server on ws://127.0.0.1:9150
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Apr 08, 2025 2:17:24 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start\r\nINFO: Started WebSocket server on ws://127.0.0.1:9150\r\n"}}
+[debug] [2025-04-08T04:17:24.531Z] API endpoint: http://127.0.0.1:8090 {"metadata":{"emulator":{"name":"firestore"},"message":"API endpoint: http://127.0.0.1:8090"}}
+[debug] [2025-04-08T04:17:24.532Z] 
+If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
+
+   export FIRESTORE_EMULATOR_HOST=127.0.0.1:8090
+
+If you are running a Firestore in Datastore Mode project, run:
+
+   export DATASTORE_EMULATOR_HOST=127.0.0.1:8090
+
+Note: Support for Datastore Mode is in preview. If you encounter any bugs please file at https://github.com/firebase/firebase-tools/issues.
+Dev App Server is now running.
+
+ {"metadata":{"emulator":{"name":"firestore"},"message":"\nIf you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:\r\n\n   export FIRESTORE_EMULATOR_HOST=127.0.0.1:8090\n\nIf you are running a Firestore in Datastore Mode project, run:\r\n\n   export DATASTORE_EMULATOR_HOST=127.0.0.1:8090\n\nNote: Support for Datastore Mode is in preview. If you encounter any bugs please file at https://github.com/firebase/firebase-tools/issues.\r\nDev App Server is now running.\n\r\n"}}
+[info] +  firestore: Firestore Emulator UI websocket is running on 9150. {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator UI websocket is running on 9150."}}
+[debug] [2025-04-08T04:17:24.542Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"storage"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2025-04-08T04:17:25.300Z] Temp file directory for storage emulator: C:\Users\PAYAMA~1\AppData\Local\Temp/firebase/storage/blobs {"metadata":{"emulator":{"name":"storage"},"message":"Temp file directory for storage emulator: C:\\Users\\PAYAMA~1\\AppData\\Local\\Temp/firebase/storage/blobs"}}
+[debug] [2025-04-08T04:17:25.305Z] Checked if tokens are valid: true, expires at: 1744087468885
+[debug] [2025-04-08T04:17:25.305Z] Checked if tokens are valid: true, expires at: 1744087468885
+[debug] [2025-04-08T04:17:25.306Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/web-productselection/sites 
+[debug] [2025-04-08T04:17:26.612Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/web-productselection/sites 200
+[debug] [2025-04-08T04:17:26.612Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/web-productselection/sites {"sites":[{"name":"projects/web-productselection/sites/web-productselection","defaultUrl":"https://web-productselection.web.app","appId":"1:657336214602:web:0f057d28b914446746f2b3","type":"DEFAULT_SITE"}]}
+[debug] [2025-04-08T04:17:26.613Z] Checked if tokens are valid: true, expires at: 1744087468885
+[debug] [2025-04-08T04:17:26.613Z] Checked if tokens are valid: true, expires at: 1744087468885
+[debug] [2025-04-08T04:17:26.613Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/web-productselection/webApps/1:657336214602:web:0f057d28b914446746f2b3/config [none]
+[debug] [2025-04-08T04:17:27.781Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/web-productselection/webApps/1:657336214602:web:0f057d28b914446746f2b3/config 200
+[debug] [2025-04-08T04:17:27.781Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/web-productselection/webApps/1:657336214602:web:0f057d28b914446746f2b3/config {"projectId":"web-productselection","appId":"1:657336214602:web:0f057d28b914446746f2b3","storageBucket":"web-productselection.firebasestorage.app","apiKey":"AIzaSyC2xzaYI5jnzudXUNllcX0D_4EwWsUdrp4","authDomain":"web-productselection.firebaseapp.com","messagingSenderId":"657336214602"}
+[debug] [2025-04-08T04:17:27.788Z] Checked if tokens are valid: true, expires at: 1744087468885
+[debug] [2025-04-08T04:17:27.789Z] Checked if tokens are valid: true, expires at: 1744087468885
+[debug] [2025-04-08T04:17:27.789Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/web-productselection [none]
+[debug] [2025-04-08T04:17:28.163Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/web-productselection 200
+[debug] [2025-04-08T04:17:28.163Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/web-productselection {"projectId":"web-productselection","projectNumber":"657336214602","displayName":"web-ProductSelection","name":"projects/web-productselection","resources":{"hostingSite":"web-productselection"},"state":"ACTIVE","etag":"1_69c6e684-02cc-4544-89fa-477e7e7a6b57"}
+[info] i  hosting[web-productselection]: Serving hosting files from: dist/product-selection-tool/browser {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mdist/product-selection-tool/browser\u001b[22m"}}
+[info] +  hosting[web-productselection]: Local server: http://127.0.0.1:5050 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://127.0.0.1:5050\u001b[22m\u001b[24m"}}
+[debug] [2025-04-08T04:17:28.192Z] Could not find VSCode notification endpoint: FetchError: request to http://localhost:40001/vscode/notify failed, reason: . If you are not running the Firebase Data Connect VSCode extension, this is expected and not an issue.
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://127.0.0.1:4040/               │
+└─────────────────────────────────────────────────────────────┘
+
+┌───────────┬────────────────┬─────────────────────────────────┐
+│ Emulator  │ Host:Port      │ View in Emulator UI             │
+├───────────┼────────────────┼─────────────────────────────────┤
+│ Firestore │ 127.0.0.1:8090 │ http://127.0.0.1:4040/firestore │
+├───────────┼────────────────┼─────────────────────────────────┤
+│ Hosting   │ 127.0.0.1:5050 │ n/a                             │
+├───────────┼────────────────┼─────────────────────────────────┤
+│ Storage   │ 127.0.0.1:9190 │ http://127.0.0.1:4040/storage   │
+└───────────┴────────────────┴─────────────────────────────────┘
+  Emulator Hub host: 127.0.0.1 port: 4440
+  Other reserved ports: 4500, 9150
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[debug] [2025-04-08T04:17:28.366Z] Apr 08, 2025 2:17:28 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel
+INFO: Connected to new websocket client
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Apr 08, 2025 2:17:28 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel\r\nINFO: Connected to new websocket client\r\n"}}
+[info] i  hosting: 127.0.0.1 - - [08/Apr/2025:04:24:19 +0000] "GET / HTTP/1.1" 200 270 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.5607" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [08/Apr/2025:04:24:19 +0000] \"GET / HTTP/1.1\" 200 270 \"-\" \"Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.5607\""}}
+[debug] [2025-04-08T04:24:28.134Z] Apr 08, 2025 2:24:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Apr 08, 2025 2:24:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected non-HTTP/2 connection.\r\n"}}
+[info] i  hosting: 127.0.0.1 - - [08/Apr/2025:04:26:30 +0000] "GET / HTTP/1.1" 200 270 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [08/Apr/2025:04:26:30 +0000] \"GET / HTTP/1.1\" 200 270 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [08/Apr/2025:04:26:31 +0000] "GET /admin/questions HTTP/1.1" 301 - "http://localhost:5050/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [08/Apr/2025:04:26:31 +0000] \"GET /admin/questions HTTP/1.1\" 301 - \"http://localhost:5050/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [08/Apr/2025:04:26:31 +0000] "GET /admin/questions/ HTTP/1.1" 200 - "http://localhost:5050/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [08/Apr/2025:04:26:31 +0000] \"GET /admin/questions/ HTTP/1.1\" 200 - \"http://localhost:5050/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [08/Apr/2025:04:26:31 +0000] "GET /favicon.ico HTTP/1.1" 200 - "http://localhost:5050/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [08/Apr/2025:04:26:31 +0000] \"GET /favicon.ico HTTP/1.1\" 200 - \"http://localhost:5050/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [08/Apr/2025:04:26:31 +0000] "GET /styles-5INURTSO.css HTTP/1.1" 200 - "http://localhost:5050/admin/questions/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [08/Apr/2025:04:26:31 +0000] \"GET /styles-5INURTSO.css HTTP/1.1\" 200 - \"http://localhost:5050/admin/questions/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [08/Apr/2025:04:26:31 +0000] "GET /polyfills-FFHMD2TL.js HTTP/1.1" 200 - "http://localhost:5050/admin/questions/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [08/Apr/2025:04:26:31 +0000] \"GET /polyfills-FFHMD2TL.js HTTP/1.1\" 200 - \"http://localhost:5050/admin/questions/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [08/Apr/2025:04:26:31 +0000] "GET /main-VFULRSXY.js HTTP/1.1" 200 - "http://localhost:5050/admin/questions/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [08/Apr/2025:04:26:31 +0000] \"GET /main-VFULRSXY.js HTTP/1.1\" 200 - \"http://localhost:5050/admin/questions/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\""}}
+[debug] [2025-04-08T04:31:24.667Z] Apr 08, 2025 2:31:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Apr 08, 2025 2:31:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected non-HTTP/2 connection.\r\n"}}
+[debug] [2025-04-08T04:36:17.796Z] Apr 08, 2025 2:36:17 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler channelClosed
+INFO: Websocket client disconnected
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Apr 08, 2025 2:36:17 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler channelClosed\r\nINFO: Websocket client disconnected\r\n"}}
+[debug] [2025-04-08T04:36:18.114Z] Apr 08, 2025 2:36:18 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel
+INFO: Connected to new websocket client
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Apr 08, 2025 2:36:18 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel\r\nINFO: Connected to new websocket client\r\n"}}
+[debug] [2025-04-08T04:37:32.326Z] Apr 08, 2025 2:37:32 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Apr 08, 2025 2:37:32 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected HTTP/2 connection.\r\n"}}
+[debug] [2025-04-08T04:37:33.374Z] Apr 08, 2025 2:37:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Apr 08, 2025 2:37:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected non-HTTP/2 connection.\r\n"}}
+[debug] [2025-04-08T04:37:33.636Z] Apr 08, 2025 2:37:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Apr 08, 2025 2:37:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected non-HTTP/2 connection.\r\n"}}
+[debug] [2025-04-08T04:37:33.814Z] Apr 08, 2025 2:37:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Apr 08, 2025 2:37:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected non-HTTP/2 connection.\r\n"}}
+[debug] [2025-04-08T04:37:47.166Z] Apr 08, 2025 2:37:47 PM io.netty.channel.DefaultChannelPipeline onUnhandledInboundException
+WARNING: An exceptionCaught() event was fired, and it reached at the tail of the pipeline. It usually means the last handler in the pipeline did not handle the exception.
+java.io.IOException: An existing connection was forcibly closed by the remote host
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:43)
+	at java.base/sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:276)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:233)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:223)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:356)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:255)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:356)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:788)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:994)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Apr 08, 2025 2:37:47 PM io.netty.channel.DefaultChannelPipeline onUnhandledInboundException\r\nWARNING: An exceptionCaught() event was fired, and it reached at the tail of the pipeline. It usually means the last handler in the pipeline did not handle the exception.\r\njava.io.IOException: An existing connection was forcibly closed by the remote host\r\n\tat java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)\r\n\tat java.base/sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:43)\r\n\tat java.base/sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:276)\r\n\tat java.base/sun.nio.ch.IOUtil.read(IOUtil.java:233)\r\n\tat java.base/sun.nio.ch.IOUtil.read(IOUtil.java:223)\r\n\tat java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:356)\r\n\tat io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:255)\r\n\tat io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)\r\n\tat io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:356)\r\n\tat io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)\r\n\tat io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:788)\r\n\tat io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724)\r\n\tat io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650)\r\n\tat io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)\r\n\tat io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:994)\r\n\tat io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)\r\n\tat io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)\r\n\tat java.base/java.lang.Thread.run(Thread.java:829)\r\n\r\n"}}
+[debug] [2025-04-08T04:37:49.716Z] Received signal SIGHUP 1
