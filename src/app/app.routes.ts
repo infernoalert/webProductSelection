@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { QuestionFormComponent } from './admin/question-form/question-form.component';
+import { QuestionFormComponent } from './components/admin/question-form/question-form.component';
 import { QuestionListComponent } from './components/admin/question-list/question-list.component';
 
 export const routes: Routes = [

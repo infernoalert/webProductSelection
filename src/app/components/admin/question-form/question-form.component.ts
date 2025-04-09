@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
-import { QuestionService } from '../../services/question.service';
-import { Question, AnswerGroup, Answer } from '../../models/question.model';
+import { QuestionService } from '../../../services/question.service';
+import { Question, AnswerGroup, Answer } from '../../../models/question.model';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
@@ -26,15 +26,6 @@ import { v4 as uuidv4 } from 'uuid';
           <div *ngIf="submitted && f['text'].errors" class="invalid-feedback">
             <div *ngIf="f['text'].errors['required']">Question text is required</div>
           </div>
-        </div>
-        
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea 
-            id="description" 
-            formControlName="description" 
-            class="form-control"
-          ></textarea>
         </div>
         
         <div class="form-group">
@@ -197,7 +188,7 @@ export class QuestionFormComponent {
   constructor() {
     this.questionForm = this.fb.group({
       text: ['', Validators.required],
-      description: [''],
+      imageFile: [null],
       answerGroups: this.fb.array([])
     });
     
@@ -252,17 +243,14 @@ export class QuestionFormComponent {
   
   // Remove an answer from an answer group
   removeAnswer(groupIndex: number, answerIndex: number) {
-    const answers = this.getAnswerForms(groupIndex);
-    answers.removeAt(answerIndex);
+    this.getAnswerForms(groupIndex).removeAt(answerIndex);
   }
   
   // Handle file selection for question image
   onQuestionImageSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
-    
-    if (file) {
-      // Store the file in the form data
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
       this.questionForm.patchValue({
         imageFile: file
       });
@@ -272,12 +260,10 @@ export class QuestionFormComponent {
   // Handle file selection for answer images
   onAnswerImageSelected(event: Event, groupIndex: number, answerIndex: number) {
     const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
-    
-    if (file) {
-      // Store the file in the specific answer
-      const answer = this.getAnswerForms(groupIndex).at(answerIndex);
-      answer.patchValue({
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const answerForm = this.getAnswerForms(groupIndex).at(answerIndex);
+      answerForm.patchValue({
         imageFile: file
       });
     }
@@ -297,23 +283,30 @@ export class QuestionFormComponent {
     this.saving = true;
     
     // Create a Question object from the form
-    const formData = this.questionForm.value;
+    const formValue = this.questionForm.value;
     const question: Question = {
-      text: formData.text,
-      description: formData.description,
-      imageFile: formData.imageFile,
-      answerGroups: formData.answerGroups
+      text: formValue.text,
+      imageFile: formValue.imageFile,
+      answerGroups: formValue.answerGroups.map((group: any) => ({
+        id: group.id,
+        answers: group.answers.map((answer: any) => ({
+          id: answer.id,
+          text: answer.text,
+          imageFile: answer.imageFile,
+          isCorrect: answer.isCorrect
+        }))
+      }))
     };
     
     // Save the question using the service
     this.questionService.saveQuestion(question).subscribe({
-      next: (questionId) => {
+      next: (questionId: string) => {
         console.log('Question saved with ID:', questionId);
         this.saving = false;
         this.success = true;
         this.resetForm();
       },
-      error: (error) => {
+      error: (error: Error) => {
         console.error('Error saving question:', error);
         this.error = error.message;
         this.saving = false;
