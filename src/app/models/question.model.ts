@@ -22,4 +22,5 @@ export interface Question {
   required?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  isFirstQuestion?: boolean;
 } 
