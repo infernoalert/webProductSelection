@@ -1,33 +1,73 @@
-<div class="container">
+<div class="container-fluid">
   <div class="header">
-    <h2>Questions</h2>
-    <button class="btn btn-primary" [routerLink]="['/admin/questions/new']">Add New Question</button>
+    <h2>Questions Management</h2>
+    <button class="btn btn-primary" [routerLink]="['/admin/questions/new']">
+      <i class="fas fa-plus"></i> Add New Question
+    </button>
   </div>
 
-  <div class="alert alert-info" *ngIf="loading">Loading questions...</div>
+  <!-- Loading State -->
+  <div class="alert alert-info" *ngIf="loading">
+    <i class="fas fa-spinner fa-spin"></i> Loading questions...
+  </div>
+
+  <!-- Empty State -->
   <div class="alert alert-warning" *ngIf="!loading && questions?.length === 0">
-    No questions found. Create your first question!
+    <i class="fas fa-info-circle"></i> No questions found. Create your first question!
   </div>
 
+  <!-- Questions Table -->
   <div class="table-responsive" *ngIf="questions && questions.length > 0">
-    <table class="table">
-      <thead>
+    <table class="table table-striped table-bordered w-100">
+      <thead class="thead-light">
         <tr>
+          <th>Question #</th>
           <th>Question Text</th>
           <th>Answer Groups</th>
+          <th>Next Questions</th>
           <th>Created</th>
-          <th>Actions</th>
+          <th class="text-center">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let question of questions">
-          <td>{{ question.text | slice:0:50 }}{{ question.text.length > 50 ? '...' : '' }}</td>
-          <td>{{ question.answerGroups.length || 0 }}</td>
-          <td>{{ formatCreatedDate(question.createdAt) }}</td>
           <td>
+            <span class="badge bg-secondary">{{ question.questionNumber }}</span>
+          </td>
+          <td>
+            <div class="question-text">
+              {{ question.text | slice:0:50 }}{{ question.text.length > 50 ? '...' : '' }}
+            </div>
+          </td>
+          <td>
+            <span class="badge bg-primary">{{ question.answerGroups.length || 0 }}</span>
+          </td>
+          <td>
+            <div class="next-questions">
+              <ng-container *ngIf="hasNextQuestions(question); else noNextQuestions">
+                <span class="badge bg-info" *ngFor="let nextQ of getNextQuestions(question)">
+                  {{ nextQ }}
+                </span>
+              </ng-container>
+              <ng-template #noNextQuestions>
+                <span class="text-muted">None</span>
+              </ng-template>
+            </div>
+          </td>
+          <td>
+            <div class="date-info">
+              <i class="far fa-calendar-alt"></i>
+              {{ formatCreatedDate(question.createdAt) }}
+            </div>
+          </td>
+          <td class="text-center">
             <div class="btn-group">
-              <button class="btn btn-sm btn-primary" [routerLink]="['/admin/questions/edit', question.id]">Edit</button>
-              <button class="btn btn-sm btn-danger" (click)="deleteQuestion(question.id)">Delete</button>
+              <button class="btn btn-primary" [routerLink]="['/admin/questions/edit', question.id]">
+                <i class="fas fa-edit"></i> Edit
+              </button>
+              <button class="btn btn-danger" (click)="deleteQuestion(question.id)">
+                <i class="fas fa-trash"></i> Delete
+              </button>
             </div>
           </td>
         </tr>
@@ -35,5 +75,8 @@
     </table>
   </div>
 
-  <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+  <!-- Error State -->
+  <div class="alert alert-danger" *ngIf="error">
+    <i class="fas fa-exclamation-circle"></i> {{ error }}
+  </div>
 </div>

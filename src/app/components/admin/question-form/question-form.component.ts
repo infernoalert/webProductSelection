@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionService } from '../../../services/question.service';
 import { Question, AnswerGroup, Answer } from '../../../models/question.model';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,9 +12,24 @@ import { v4 as uuidv4 } from 'uuid';
   imports: [CommonModule, ReactiveFormsModule],
   template: `
     <div class="container">
-      <h2>Create Question</h2>
+      <h2>{{ isEditMode ? 'Edit' : 'Create' }} Question</h2>
       
       <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="questionNumber">Question Number *</label>
+          <input 
+            type="number" 
+            id="questionNumber" 
+            formControlName="questionNumber" 
+            class="form-control"
+            [class.is-invalid]="submitted && f['questionNumber'].errors"
+          >
+          <div *ngIf="submitted && f['questionNumber'].errors" class="invalid-feedback">
+            <div *ngIf="f['questionNumber'].errors['required']">Question number is required</div>
+            <div *ngIf="f['questionNumber'].errors['min']">Question number must be at least 1</div>
+          </div>
+        </div>
+        
         <div class="form-group">
           <label for="questionText">Question Text *</label>
           <input 
@@ -88,7 +104,19 @@ import { v4 as uuidv4 } from 'uuid';
                               </div>
                             </div>
                             
-                            <div class="form-group">
+                            <div class="form-group mt-2">
+                              <label [for]="'nextQuestion' + i + '-' + j">Next Question Number (Optional)</label>
+                              <input 
+                                [id]="'nextQuestion' + i + '-' + j" 
+                                type="number" 
+                                formControlName="nextQuestion" 
+                                class="form-control"
+                                placeholder="Enter question number to go to next"
+                              >
+                              <small class="form-text text-muted">Leave empty to continue to the next question in sequence</small>
+                            </div>
+                            
+                            <div class="form-group mt-2">
                               <label [for]="'answerImage' + i + '-' + j">Answer Image</label>
                               <input 
                                 [id]="'answerImage' + i + '-' + j" 
@@ -97,18 +125,6 @@ import { v4 as uuidv4 } from 'uuid';
                                 class="form-control"
                                 accept="image/*"
                               >
-                            </div>
-                            
-                            <div class="form-check">
-                              <input 
-                                [id]="'answerCorrect' + i + '-' + j" 
-                                type="checkbox" 
-                                formControlName="isCorrect" 
-                                class="form-check-input"
-                              >
-                              <label [for]="'answerCorrect' + i + '-' + j" class="form-check-label">
-                                Correct Answer
-                              </label>
                             </div>
                           </div>
                           
@@ -175,18 +191,23 @@ import { v4 as uuidv4 } from 'uuid';
     }
   `]
 })
-export class QuestionFormComponent {
-  private questionService = inject(QuestionService);
-  private fb = inject(FormBuilder);
-  
+export class QuestionFormComponent implements OnInit {
   questionForm: FormGroup;
   submitted = false;
   saving = false;
   error: string | null = null;
   success = false;
+  questionId?: string;
+  isEditMode = false;
   
-  constructor() {
+  constructor(
+    private questionService: QuestionService,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.questionForm = this.fb.group({
+      questionNumber: [null, [Validators.required, Validators.min(1)]],
       text: ['', Validators.required],
       imageFile: [null],
       answerGroups: this.fb.array([])
@@ -194,6 +215,71 @@ export class QuestionFormComponent {
     
     // Add an initial answer group with one answer
     this.addAnswerGroup();
+  }
+  
+  ngOnInit(): void {
+    // Check if we're in edit mode
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.isEditMode = true;
+        this.questionId = params['id'];
+        this.loadQuestion(params['id']);
+      }
+    });
+  }
+  
+  loadQuestion(id: string): void {
+    this.questionService.getQuestionById(id).subscribe({
+      next: (question) => {
+        if (question) {
+          this.populateForm(question);
+        } else {
+          this.error = 'Question not found';
+        }
+      },
+      error: (error) => {
+        this.error = 'Error loading question: ' + error.message;
+      }
+    });
+  }
+  
+  populateForm(question: Question): void {
+    this.questionForm.patchValue({
+      questionNumber: question.questionNumber,
+      text: question.text
+    });
+    
+    // Clear existing answer groups
+    while (this.answerGroupForms.length) {
+      this.answerGroupForms.removeAt(0);
+    }
+    
+    // Add answer groups from the question
+    if (question.answerGroups && question.answerGroups.length > 0) {
+      question.answerGroups.forEach(group => {
+        const answerGroup = this.fb.group({
+          id: [group.id],
+          name: [group.name || ''],
+          answers: this.fb.array([])
+        });
+        
+        const answers = answerGroup.get('answers') as FormArray;
+        
+        group.answers.forEach(answer => {
+          answers.push(this.fb.group({
+            id: [answer.id],
+            text: [answer.text, Validators.required],
+            nextQuestion: [answer.nextQuestion || null],
+            imageFile: [null]
+          }));
+        });
+        
+        this.answerGroupForms.push(answerGroup);
+      });
+    } else {
+      // Add at least one answer group if none exist
+      this.addAnswerGroup();
+    }
   }
   
   // Getters for easy access to form
@@ -230,15 +316,15 @@ export class QuestionFormComponent {
   
   // Add a new answer to an answer group
   addAnswer(groupIndex: number) {
-    const answers = this.getAnswerForms(groupIndex);
+    const answerGroup = this.answerGroupForms.at(groupIndex);
+    const answers = answerGroup.get('answers') as FormArray;
     
-    const answer = this.fb.group({
+    answers.push(this.fb.group({
       id: [uuidv4()],
       text: ['', Validators.required],
-      isCorrect: [false]
-    });
-    
-    answers.push(answer);
+      nextQuestion: [null],
+      imageFile: [null]
+    }));
   }
   
   // Remove an answer from an answer group
@@ -275,7 +361,6 @@ export class QuestionFormComponent {
     this.error = null;
     this.success = false;
     
-    // Check if the form is valid
     if (this.questionForm.invalid) {
       return;
     }
@@ -284,47 +369,87 @@ export class QuestionFormComponent {
     
     // Create a Question object from the form
     const formValue = this.questionForm.value;
-    const question: Question = {
-      text: formValue.text,
-      imageFile: formValue.imageFile,
-      answerGroups: formValue.answerGroups.map((group: any) => ({
-        id: group.id,
-        answers: group.answers.map((answer: any) => ({
-          id: answer.id,
-          text: answer.text,
-          imageFile: answer.imageFile,
-          isCorrect: answer.isCorrect
-        }))
-      }))
-    };
     
-    // Save the question using the service
-    this.questionService.saveQuestion(question).subscribe({
-      next: (questionId: string) => {
-        console.log('Question saved with ID:', questionId);
-        this.saving = false;
-        this.success = true;
-        this.resetForm();
+    // Ensure questionNumber is a valid number
+    const questionNumber = parseInt(formValue.questionNumber, 10);
+    
+    if (isNaN(questionNumber) || questionNumber < 1) {
+      this.error = 'Please enter a valid question number (must be at least 1)';
+      this.saving = false;
+      return;
+    }
+    
+    // Check if the question number is unique
+    this.questionService.isQuestionNumberUnique(questionNumber, this.questionId).subscribe(
+      isUnique => {
+        if (!isUnique) {
+          this.error = `Question number ${questionNumber} is already in use. Please choose a different number.`;
+          this.saving = false;
+          return;
+        }
+        
+        // Continue with saving if the number is unique
+        const question: Question = {
+          questionNumber: questionNumber,
+          text: formValue.text,
+          imageFile: formValue.imageFile || null,
+          answerGroups: formValue.answerGroups.map((group: any) => ({
+            id: group.id,
+            answers: group.answers.map((answer: any) => ({
+              id: answer.id,
+              text: answer.text,
+              imageFile: answer.imageFile || null
+            }))
+          }))
+        };
+        
+        // If in edit mode, set the ID
+        if (this.isEditMode && this.questionId) {
+          question.id = this.questionId;
+        }
+        
+        // Save the question
+        this.questionService.saveQuestion(question).subscribe(
+          id => {
+            this.success = true;
+            this.saving = false;
+            
+            if (!this.isEditMode) {
+              // Reset form after successful submission only in create mode
+              this.resetForm();
+            }
+          },
+          error => {
+            this.error = 'Error saving question: ' + error.message;
+            this.saving = false;
+          }
+        );
       },
-      error: (error: Error) => {
-        console.error('Error saving question:', error);
-        this.error = error.message;
+      error => {
+        this.error = 'Error checking question number: ' + error.message;
         this.saving = false;
       }
-    });
+    );
   }
   
   // Reset the form after successful submission
-  private resetForm() {
-    this.submitted = false;
-    this.questionForm.reset();
+  resetForm() {
+    this.questionForm.reset({
+      questionNumber: null,
+      text: '',
+      imageFile: null
+    });
     
-    // Clear answer groups
-    while (this.answerGroupForms.length > 0) {
+    // Clear the answer groups
+    while (this.answerGroupForms.length) {
       this.answerGroupForms.removeAt(0);
     }
     
-    // Add an initial answer group with one answer
+    // Add a default answer group
     this.addAnswerGroup();
+    
+    this.submitted = false;
+    this.error = null;
+    this.success = false;
   }
 } 
